@@ -120,7 +120,7 @@ def predict():
     summarized_paragraph = summarizedParagraph(document, custom_weights)
 
     print("REQUESTION IS:", summarized_paragraph, question)
-    
+
     try:
         out = model.predict(summarized_paragraph, question)
         return jsonify({"result":out})
@@ -130,4 +130,4 @@ def predict():
 
 if __name__ == "__main__":
     app.run('0.0.0.0',port=8000)
-  
+    # curl -X POST http://0.0.0.0:8000/predict -H 'Content-Type: application/json' -d '{ "bank": "doesnt matter", "question":"Do you charge fees for electronic fund transfer services?" }'
