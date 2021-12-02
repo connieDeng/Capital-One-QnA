@@ -1,59 +1,43 @@
-import urllib.request  
-import bs4 as BeautifulSoup
-import nltk
+## for data
+import json
+import pandas as pd
+import numpy as np
+## for plotting
+import matplotlib.pyplot as plt
+import seaborn as sns
+## for processing
 import re
-import gensim.downloader as api
-from string import punctuation
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-from nltk.tokenize import sent_tokenize
-from nltk.stem import WordNetLemmatizer
-from gensim.models.word2vec import Word2Vec
-from tabulate import tabulate
-
-model_google_news = api.load("word2vec-google-news-300")
+import nltk
+## for bag-of-words
+from sklearn import feature_extraction, model_selection, naive_bayes, pipeline, manifold, preprocessing
+## for explainer
+from lime import lime_text
+## for word embedding
+import gensim
+import gensim.downloader as gensim_api
+## for deep learning
+from tensorflow.keras import models, layers, preprocessing as kprocessing
+from tensorflow.keras import backend as K
+## for bert language model
+import transformers
 
 def returnBankParagraphs():
-
-    model_glove_twitter.wv.most_similar("good",topn=10)
-    print(model_google_news)
-
     # we are using capital one for now
-    text = urllib.request.urlopen('https://www.capitalone.com/bank/savings-accounts/online-performance-savings-account/disclosures/')
+    # text = urllib.request.urlopen('https://www.capitalone.com/bank/savings-accounts/online-performance-savings-account/disclosures/')
 
-    article = text.read()
-    article_parsed = BeautifulSoup.BeautifulSoup(article,'html.parser')    
+    # article = text.read()
+    # article_parsed = BeautifulSoup.BeautifulSoup(article,'html.parser')    
 
-    paragraphs = article_parsed.find_all('p')
+    # paragraphs = article_parsed.find_all('p')
 
-    article_paragraphs = []
-    for p in paragraphs:  
-        article_paragraphs.append(p.text.lower())
+    # article_paragraphs = []
+    # for p in paragraphs:  
+    #     article_paragraphs.append(p.text.lower())
 
-    return article_paragraphs
-
-'''
-changing 
-- my --> your
-- me --> you?
-'''
-
-'''
-Closing an Account: You can close your account at any time, for any reason. We can close your account at any time, for any reason and without advance notice.
-'''
-
-def findCloseSubstrings(document, question):
-    glove_vectors = gensim.downloader.load('glove-twitter-25')
-    question_word = ["who", "what", "when", "where", "how", "why"]
-    
-    for word in word_tokenize(question.lower()):
-        print(word)
-
-    return 'end'
-        
+    return "article_paragraphs"
 
 
 if __name__ == "__main__":
     document = returnBankParagraphs()
-    question = "When can I close my account?"
-    print(findCloseSubstrings(document,question))
+    print(document)
+    

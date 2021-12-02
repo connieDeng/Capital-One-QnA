@@ -16,13 +16,13 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 
 from flask import Flask,request,jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from word2vec_similarity import *
 from bert import QA
 
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True)
 
 model = QA("model")
     
@@ -119,6 +119,7 @@ def top_ten_most_similar(cos_similarity_dict):
   return cos_similarity_dict[3:13]
 
 @app.route("/predict",methods=['POST'])
+@cross_origin(supports_credentials=True)
 def predict():
     bank = request.json["bank"]
     question = request.json["question"]
@@ -132,7 +133,7 @@ def predict():
     legal_bank_dict = legal_bank_vec_dict(paragraphs)
 
     most_similar_paragraphs = top_ten_most_similar(similarilty_question_and_paragraph(question_vec_avg, legal_bank_dict))
-
+    print(most_similar_paragraphs)
     # return jsonify({
     #     "question": question,
     #     "custom_weights": custom_weights,
@@ -147,8 +148,6 @@ def predict():
       possible_ans.append(out["answer"])
     
     return jsonify({"result": possible_ans })
-          
-    
 
 if __name__ == "__main__":
     app.run('0.0.0.0',port=8000)
