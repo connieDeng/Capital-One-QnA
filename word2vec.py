@@ -94,6 +94,18 @@ def vec_representation(text):
 def cos_similarity(list1, list2):
     return 1 - spatial.distance.cosine(list1, list2)
 
+def custom_weight(row, question, weigth):
+    added_weight = 0
+    tokens = word_tokenize(question)
+    
+    lemmatizer = WordNetLemmatizer()
+    tokens = [lemmatizer.lemmatize(token) for token in tokens]
+    
+    for token in tokens:
+      if token in row:
+        added_weight += weigth
+    return added_weight
+
 @app.route("/predict", methods=['POST'])
 @cross_origin(supports_credentials=True)
 def predict():
@@ -112,8 +124,11 @@ def predict():
     df["text_clean"] = df["paragraph"].apply(lambda x: utils_preprocess_text(x, flg_stemm=False, flg_lemm=True, lst_stopwords=lst_stopwords))
     df["vectorized"] = df["text_clean"].apply(lambda x: vec_representation(x))
     df["cos_sim"] = df['vectorized'][1:].apply(lambda x: cos_similarity(x,df['vectorized'][0]))
+    
+    df["added_wieght"] = df['text_clean'][1:].apply(lambda x: custom_weight(x,df['text_clean'][0], 0.5))
+    df["cos_sim_with_added_wieght"] = df['cos_sim'][1:] + df['added_wieght'][1:]
 
-    possible_ans = df.nlargest(10, ["cos_sim"])
+    possible_ans = df.nlargest(10, ["cos_sim_with_added_wieght"])
     data = list(possible_ans["paragraph"])
     print(data)
     return jsonify({"result": data})

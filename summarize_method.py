@@ -62,7 +62,7 @@ def summarizedParagraph(document, custom_weights):
     tokens = [lemmatizer.lemmatize(token) for token in tokens]
 
     stop_words = stopwords.words('english')
-    stop_words += ["us", "account", "may", 'u']
+    stop_words += ["us", "may", 'u']
 
     word_frequencies = {}
 
@@ -127,6 +127,8 @@ def predict():
     try:
         out = model.predict(summary_paragraph, question)
         print("ANSWER", out['answer'])
+        print("SUMMARY PARAGRAPH", summary_paragraph)
+
         return jsonify({"result":out})
     except Exception as e:
         print(e)
