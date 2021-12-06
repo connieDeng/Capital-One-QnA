@@ -2,4 +2,4 @@ curl -X POST http://0.0.0.0:8000/predict -H 'Content-Type: application/json' -d 
 nodemon --exec python3 <file_name>
 nodemon --exec python3 word2vec_similarity.py 
 
-curl -X POST http://0.0.0.0:8000/predict -H 'Content-Type: application/json' -d '{ "bank": "test","question":"When can I close my account" }'
+curl -X POST http://0.0.0.0:8000/predict -H 'Content-Type: application/json' -d '{ "bank": "https://www.capitalone.com/bank/savings-accounts/online-performance-savings-account/disclosures/","question":"When can I close my account?" }'
