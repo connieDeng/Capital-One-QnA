@@ -41,7 +41,7 @@ function App() {
   return (
     <div className="App" style={{ "display":"flex", "justifyContent":"center", "textAlign" : "center", "paddingTop":"20vh"}}>
       <section style={{"minWidth":"70vw", "minHeight":"35vh", "display":"flex", "justifyContent":"space-between", "flexDirection" : "column", "alignItems":"center"}}>
-        <h1>Financial QnA</h1>
+        <h1>Capital One Challenge, Financial/Legal Agreement QnA</h1>
         <Autocomplete
           value={bank}
           onChange={(event, newValue) => {
